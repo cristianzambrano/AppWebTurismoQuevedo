@@ -1,0 +1,82 @@
+ERROR - 2023-11-13 20:49:28 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/MySQLi/Connection.php:185
+Stack trace:
+#0 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/MySQLi/Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'gad_quevedo_tur...', 3306, '', 0)
+#1 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(17): CodeIgniter\Database\BaseConnection->query('SELECT c.id as ...')
+#4 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(62): App\Models\lugarturistico_model->execQuery('SELECT c.id as ...')
+#5 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Controllers/Home.php(12): App\Models\lugarturistico_model->getListadoGrid(0, 0)
+#6 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#7 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: NO) in /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/MySQLi/Connection.php:229
+Stack trace:
+#0 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(17): CodeIgniter\Database\BaseConnection->query('SELECT c.id as ...')
+#3 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(62): App\Models\lugarturistico_model->execQuery('SELECT c.id as ...')
+#4 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Controllers/Home.php(12): App\Models\lugarturistico_model->getListadoGrid(0, 0)
+#5 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#6 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/index.php(79): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-11-13 20:49:28 --> Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: NO)
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH/Models/lugarturistico_model.php(17): CodeIgniter\Database\BaseConnection->query('SELECT c.id as categoria_id, c.descripcion as categoria, sc.descripcion as subcategoria, l.*
+        FROM lugar_turistico l, subcategoria_lugar sc, categoria_lugar c
+        WHERE sc.id = l.subcategoria_id and c.id = sc.categoria_id  order by c.descripcion, sc.descripcion, l.nombre_lugar')
+ 3 APPPATH/Models/lugarturistico_model.php(62): App\Models\lugarturistico_model->execQuery('SELECT c.id as categoria_id, c.descripcion as categoria, sc.descripcion as subcategoria, l.*
+        FROM lugar_turistico l, subcategoria_lugar sc, categoria_lugar c
+        WHERE sc.id = l.subcategoria_id and c.id = sc.categoria_id  order by c.descripcion, sc.descripcion, l.nombre_lugar')
+ 4 APPPATH/Controllers/Home.php(12): App\Models\lugarturistico_model->getListadoGrid(0, 0)
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
+ERROR - 2023-11-13 20:51:13 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'u787956442_gad'@'localhost' (using password: YES) in /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/MySQLi/Connection.php:185
+Stack trace:
+#0 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/MySQLi/Connection.php(185): mysqli->real_connect('localhost', 'u787956442_gad', 'Uteq2023', 'u787956442_turi...', 3306, '', 0)
+#1 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(17): CodeIgniter\Database\BaseConnection->query('SELECT c.id as ...')
+#4 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(62): App\Models\lugarturistico_model->execQuery('SELECT c.id as ...')
+#5 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Controllers/Home.php(12): App\Models\lugarturistico_model->getListadoGrid(0, 0)
+#6 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#7 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#8 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/index.php(79): CodeIgniter\CodeIgniter->run()
+#10 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/MySQLi/Connection.php:229
+Stack trace:
+#0 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(392): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(17): CodeIgniter\Database\BaseConnection->query('SELECT c.id as ...')
+#3 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Models/lugarturistico_model.php(62): App\Models\lugarturistico_model->execQuery('SELECT c.id as ...')
+#4 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/app/Controllers/Home.php(12): App\Models\lugarturistico_model->getListadoGrid(0, 0)
+#5 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(942): App\Controllers\Home->index()
+#6 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#7 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 /home/u787956442/domains/uealecpeterson.net/public_html/turismo/index.php(79): CodeIgniter\CodeIgniter->run()
+#9 {main}
+CRITICAL - 2023-11-13 20:51:13 --> Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: YES)
+in SYSTEMPATH/Database/BaseConnection.php on line 428.
+ 1 SYSTEMPATH/Database/BaseConnection.php(575): CodeIgniter\Database\BaseConnection->initialize()
+ 2 APPPATH/Models/lugarturistico_model.php(17): CodeIgniter\Database\BaseConnection->query('SELECT c.id as categoria_id, c.descripcion as categoria, sc.descripcion as subcategoria, l.*
+        FROM lugar_turistico l, subcategoria_lugar sc, categoria_lugar c
+        WHERE sc.id = l.subcategoria_id and c.id = sc.categoria_id  order by c.descripcion, sc.descripcion, l.nombre_lugar')
+ 3 APPPATH/Models/lugarturistico_model.php(62): App\Models\lugarturistico_model->execQuery('SELECT c.id as categoria_id, c.descripcion as categoria, sc.descripcion as subcategoria, l.*
+        FROM lugar_turistico l, subcategoria_lugar sc, categoria_lugar c
+        WHERE sc.id = l.subcategoria_id and c.id = sc.categoria_id  order by c.descripcion, sc.descripcion, l.nombre_lugar')
+ 4 APPPATH/Controllers/Home.php(12): App\Models\lugarturistico_model->getListadoGrid(0, 0)
+ 5 SYSTEMPATH/CodeIgniter.php(942): App\Controllers\Home->index()
+ 6 SYSTEMPATH/CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 7 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()

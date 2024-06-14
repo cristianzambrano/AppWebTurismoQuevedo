@@ -1,0 +1,9 @@
+CRITICAL - 2023-11-14 05:02:40 --> preg_match(): Compilation failed: unmatched closing parenthesis at offset 36
+in SYSTEMPATH/Router/Router.php on line 424.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'preg_match(): Compilation failed: unmatched closing parenthesis at offset 36', '/home/u787956442/domains/uealecpeterson.net/public_html/turismo/system/Router/Router.php', 424, [...])
+ 2 SYSTEMPATH/Router/Router.php(424): preg_match('#^lugar_turistico/json_getlistadoGrid)$#u', 'lugar_turistico/json_getlistadoGrid', [])
+ 3 SYSTEMPATH/Router/Router.php(186): CodeIgniter\Router\Router->checkRoutes('lugar_turistico/json_getlistadoGrid')
+ 4 SYSTEMPATH/CodeIgniter.php(823): CodeIgniter\Router\Router->handle('lugar_turistico/json_getlistadoGrid')
+ 5 SYSTEMPATH/CodeIgniter.php(450): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+ 6 SYSTEMPATH/CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH/index.php(79): CodeIgniter\CodeIgniter->run()
