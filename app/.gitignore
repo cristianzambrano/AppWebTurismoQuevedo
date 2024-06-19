@@ -1,0 +1,5 @@
+# Ignorar archivos de configuración de IDE
+.vscode/
+.idea/
+/app/Config/App.php
+/app/Config/Database.php

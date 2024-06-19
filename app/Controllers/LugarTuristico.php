@@ -36,6 +36,11 @@ class LugarTuristico extends BaseController
         return view('lugarturistico/lista_grid_public');
     }
 
+    public function viewMapa_public(): string
+    {
+        return view('lugarturistico/mapa_public');
+    }
+
     public function viewVistaModalLugarTuristico($IDC): string
     {
         if(is_numeric($IDC)){
@@ -79,7 +84,80 @@ class LugarTuristico extends BaseController
        
     }
 
-  
+    public function viewMapaPublic()
+    {
+       
+        $lat = $this->request->getVar('lat');
+        $lng = $this->request->getVar('lng');
+        
+        if (!is_numeric($lat))     return $this->sendBadRequest('Parámetro lat NO numérico');
+        if (!is_numeric($lng))     return $this->sendBadRequest('Parámetro lng NO numérico');
+
+        if ($lat < -90 || $lat > 90)     return $this->sendBadRequest('Parámetro lat fuera del rango válido (-90 a 90)');
+        if ($lng < -180 || $lng > 180)    return $this->sendBadRequest('Parámetro lng fuera del rango válido (-180 a 180)');
+        
+
+        if($this->request->getVar('radio')){
+            $radio = $this->request->getVar('radio');
+            if (!is_numeric($radio))    return $this->sendBadRequest('Parámetro radio NO numérico');
+            if ($radio<0.1)             return $this->sendBadRequest('El radio debe ser mayor 0.1 km ');
+          
+        }else $radio = 1;
+
+
+        if($this->request->getVar('idc')){
+            $IDC = $this->request->getVar('idc');
+            if (!is_numeric($IDC)) 
+                return $this->sendBadRequest('Parámetro IDC NO numérico');
+        }else $IDC = 0;
+
+        if($this->request->getVar('idsc')){
+            $IDSC = $this->request->getVar('idsc');
+            if (!is_numeric($IDSC)) 
+                return $this->sendBadRequest('Parámetro IDSC NO numérico');
+        }else $IDSC = 0;
+
+        $lugaresCercanos = $this->getLugaresCercanos($lat, $lng, $radio, $IDC, $IDSC);
+        if($lugaresCercanos)
+          return view('lugarturistico/mapa', $lugaresCercanos);
+       
+    }
+
+    private function getLugaresCercanos($lat= -1.023, $lng=-79.464, $radio=1, $IDC=0, $IDSC=0){
+        $lugaresCercanos = [];
+
+        $model = new lugarturistico_model();
+        $lugares = $model->getListadoMapa($IDC,$IDSC);
+        if($lugares)
+            $lugares = $lugares['data'];
+        else return  ['data' => $lugaresCercanos]; 
+        
+        foreach ($lugares as $lugar) {
+            $distancia = $this->calcularDistancia($lat, $lng, $lugar['lat'], $lugar['lng']);
+            if ($distancia <= $radio) {
+                $lugaresCercanos[] = $lugar;
+            }
+        }
+        return ['data' => $lugaresCercanos]; 
+    }
+
+    private function calcularDistancia($lat1, $lng1, $lat2, $lng2)
+    {
+        $earthRadius = 6371; // Radio de la Tierra en kilómetros
+
+        $dLat = deg2rad($lat2 - $lat1);
+        $dLng = deg2rad($lng2 - $lng1);
+
+        $a = sin($dLat / 2) * sin($dLat / 2) +
+            cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+            sin($dLng / 2) * sin($dLng / 2);
+
+        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+
+        $distancia = $earthRadius * $c;
+
+        return $distancia;
+    }
 
     ///////////// JSON /////////////////////////
     public function getjson_ListadoLugares() {
@@ -113,6 +191,43 @@ class LugarTuristico extends BaseController
     
     }
 
+    public function getjson_ListadoLugaresCercanos() {
+    
+        $lat = $this->request->getVar('lat');
+        $lng = $this->request->getVar('lng');
+        
+        if (!is_numeric($lat))     return $this->sendBadRequest('Parámetro lat NO numérico');
+        if (!is_numeric($lng))     return $this->sendBadRequest('Parámetro lng NO numérico');
+
+        if ( $lat < -90 || $lat > 90)     return $this->sendBadRequest('Parámetro lat fuera del rango válido (-90 a 90)');
+        if ($lng < -180 || $lng > 180)    return $this->sendBadRequest('Parámetro lng fuera del rango válido (-180 a 180)');
+        
+
+        if($this->request->getVar('radio')){
+            $radio = $this->request->getVar('radio');
+            if (!is_numeric($radio))    return $this->sendBadRequest('Parámetro radio NO numérico');
+            if ($radio<0.1)             return $this->sendBadRequest('El radio debe ser mayor 0.1 km ');
+          
+        }else $radio = 1;
+
+
+        if($this->request->getVar('idc')){
+            $IDC = $this->request->getVar('idc');
+            if (!is_numeric($IDC)) 
+                return $this->sendBadRequest('Parámetro IDC NO numérico');
+        }else $IDC = 0;
+
+        if($this->request->getVar('idsc')){
+            $IDSC = $this->request->getVar('idsc');
+            if (!is_numeric($IDSC)) 
+                return $this->sendBadRequest('Parámetro IDSC NO numérico');
+        }else $IDSC = 0;
+
+        $datos = $this->getLugaresCercanos($lat, $lng, $radio, $IDC, $IDSC);
+        echo json_encode($datos);
+    
+    }
+
 
     public function insertLugarTuristico()
     {
@@ -143,7 +258,14 @@ class LugarTuristico extends BaseController
                 'rules'  => 'required|numeric|greater_than[1990]',
                 'errors' => ['required' => 'Año requerido'],
             ],
-            
+            'latitud' => [
+                'rules'  => 'required|numeric|greater_than_equal_to[-90]|less_than_equal_to[90]',
+                'errors' => ['required' => 'Latitud requerida'],
+            ],
+            'longitud' => [
+                'rules'  => 'required|numeric|greater_than_equal_to[-180]|less_than_equal_to[180]',
+                'errors' => ['required' => 'Longitud requerida'],
+            ],
             'telefono' => [
                 'rules'  => 'required|max_length[100]',
                 'errors' => ['required' => 'Teléfono del Lugar requerido'],
@@ -273,6 +395,14 @@ class LugarTuristico extends BaseController
             'telefono' => [
                 'rules'  => 'required|max_length[100]',
                 'errors' => ['required' => 'Teléfono del Lugar requerido'],
+            ],
+            'latitud' => [
+                'rules'  => 'required|numeric|greater_than_equal_to[-90]|less_than_equal_to[90]',
+                'errors' => ['required' => 'Latitud requerida'],
+            ],
+            'longitud' => [
+                'rules'  => 'required|numeric|greater_than_equal_to[-180]|less_than_equal_to[180]',
+                'errors' => ['required' => 'Longitud requerida'],
             ],
             'delivery' => [
                 'rules'  => 'max_length[300]',

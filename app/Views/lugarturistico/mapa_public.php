@@ -85,13 +85,13 @@ header("Cache-Control: no-cache, must-revalidate");
 
                 <div class="col-sm-2" style="margin: 0.5em;">
                     <label for="radioSlider"><b>Radio</b></label>
-                    <input type="range" id="radioSlider" name="radioSlider" step="0.1" min="0.1" max="5" value="0.1" class="custom-range">
-                    <div id="radioValue">0.1 km</div>
+                    <input type="range" id="radioSlider" name="radioSlider" step="0.1" min="0.1" max="5" value="1" class="custom-range">
+                    <div id="radioValue">1 km</div>
                 </div>
 
                 <div class="col-sm-1" style="">
                     <label><b>Círculo</b></label>
-                    <button id="btCirculo" name="btCirculo" type="button" class="btn btn-secondary">Mostrar</button>
+                    <button id="btCirculo" name="btCirculo" type="button" class="btn btn-primary">Ocultar</button>
                 </div>
 
                 <div class="col-sm-1" style="">
@@ -213,6 +213,7 @@ header("Cache-Control: no-cache, must-revalidate");
     var markers = []; 
     initMap();
     
+    
     map.addListener('idle', function() {
             var center = map.getCenter();
             if(center){
@@ -231,14 +232,17 @@ header("Cache-Control: no-cache, must-revalidate");
                 };
                 map.setCenter(userLocation);
                 fetchMarkers(userLocation); 
+                toggleCircle();
             }, function() {
                 map.setCenter(defaultLocation);
                 fetchMarkers(defaultLocation); 
+                toggleCircle();
 
             });
      } else {
             map.setCenter(defaultLocation);
             fetchMarkers(defaultLocation); 
+            toggleCircle();
      }
     
      $('#btCirculo').on('click', function() {

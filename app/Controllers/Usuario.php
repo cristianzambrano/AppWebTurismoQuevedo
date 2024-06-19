@@ -52,7 +52,7 @@ class Usuario extends BaseController
     private function setUserSession($user)
     {
         $data = [
-            'id' => $user['id'],
+            'user_id' => $user['id'],
             'cedula' => $user['cedula'],
             'nombres' => $user['nombres'],
             'apellidos' => $user['apellidos'],

@@ -53,13 +53,8 @@
                 <div class="card h-100 box-shadow rounded text-center d-flex flex-column">
                  <img class="img-thumbnail" src="assets/imgs/logos_gifs/<?=$row['logo']?>" alt="Card image cap">
                     <div class="card-body">
-                    
                          <h6 class="text-small"><?=$row['nombre_lugar']?></h6>
-                  
-                    
-                      
                     </div>
-                    
                 </div>
                 </a>
                 </div>

@@ -58,7 +58,7 @@ header("Cache-Control: no-cache, must-revalidate");
             <div class="tr-card-body">
               <div class="row mb-2">
 
-              <div class="col-sm-4" style="margin: 0.5em 0.5em 0.5em 0.5em;">
+              <div class="col-sm-5" style="margin: 0.5em 0.5em 0.5em 0.5em;">
                   <label for="regCategoria"><b>Categoría</b></label>
                     <select id="regCategoria" name="regTipoID" class="custom-select" required>
                     </select>
@@ -66,13 +66,21 @@ header("Cache-Control: no-cache, must-revalidate");
                     <div class="invalid-feedback">Categoría NO válida</div>
                 </div>
                 
-                <div class="col-sm-7" style="margin: 0.5em 0.5em 0.5em 0.5em;">
+                <div class="col-sm-5" style="margin: 0.5em 0.5em 0.5em 0.5em;">
                     <label for="regSubCategoria"><b>SubCategoría</b></label>
                       <select id="regSubCategoria" name="regSubCategoria" class="custom-select" required>
                       </select>
                     <div class="valid-feedback">SubCategoría válida</div>
                     <div class="invalid-feedback">SubCategoría NO válida</div>
                 </div>
+
+                <div class="col-sm-1" style="">
+                    <label><b>Mapa</b></label>
+                    <a class="btn btn-outline-primary text-right" href="mapa"><b>
+                     <i class="fa fa-globe" aria-hidden="true"></i></b></a>
+                </div>
+
+                
 
               </div>  
             </div>
@@ -93,7 +101,7 @@ header("Cache-Control: no-cache, must-revalidate");
 
      <p class="float-right">
         
-        <a class="btn btn-outline-primary text-right" href="login"><b><i class="fa fa-sign-in" aria-hidden="true"></i></b></a>
+        <a class="btn btn-outline-primary text-right" href="mapa"><b><i class="fa fa-globe" aria-hidden="true"></i></b></a>
     </p>
      
       <div class="text-center my-auto">

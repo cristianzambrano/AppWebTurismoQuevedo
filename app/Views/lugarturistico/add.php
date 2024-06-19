@@ -61,7 +61,7 @@
                 </div>
                 
                 <div class="col-sm-11" style="margin: 0.5em 0.5em 0.5em 0.5em;">
-                    <label for="regDireccion"><i class="fa fa-map-marker" aria-hidden="true"></i> Dirección del Lugar</label>
+                    <label for="regDireccion"><i class="fa fa-globe" aria-hidden="true"></i> Dirección del Lugar</label>
                     <input 
                       id="regDireccion" 
                       name="regDireccion" 
@@ -118,6 +118,35 @@
                 </div>
               
 
+                <div class="col-sm-4"  style="margin: 0.5em 0.5em 0.5em 0.5em;">
+                  <label for="regLatitud"><i class="fa fa-map-marker" aria-hidden="true"></i> Latitud</label>
+                   <input 
+                    class="form-control"
+                    type="number" 
+                    step="0.000001"
+                    min="-90" max="90"
+                    id="regLatitud" 
+                    name="regLatitud"
+                    placeholder="Latitud"
+                   required>
+                  <div class="valid-feedback">Latitud válida</div>
+                  <div class="invalid-feedback">Especifique una Latitud (-90° y +90°) válida</div>
+                </div>
+
+                <div class="col-sm-4"  style="margin: 0.5em 0.5em 0.5em 0.5em;">
+                  <label for="regLongitud"><i class="fa fa-map-marker" aria-hidden="true"></i> Longitud</label>
+                   <input  
+                    class="form-control"
+                    type="number" 
+                    step="0.000001"
+                    min="-180" max="180"
+                    placeholder="Longitud"
+                    id="regLongitud" 
+                    name="regLongitud"
+                   required>
+                  <div class="valid-feedback">Longitud válida</div>
+                  <div class="invalid-feedback">Especifique una Latitud  (-180° y +180°)  válida</div>
+                </div>
                 
               </div>  <!-- row -->
 
@@ -293,6 +322,9 @@
       if($("#regAnio").val().trim()=="") return "Ingrese Año Funcionamiento del Lugar";
       if($("#regPuntuacion").val().trim()=="") return "Ingrese Puntuación del Lugar";
 
+      if($("#regLatitud").val().trim()=="") return "Ingrese Coordenada Geográfica Latitud";
+      if($("#regLongitud").val().trim()=="") return "Ingrese Coordenada Geográfica Longitud";
+
       var fileInput = document.getElementById('regFileLogo');
       if (fileInput.files && fileInput.files[0]) {
           var filePath = fileInput.value;
@@ -338,6 +370,8 @@
     formData.append("delivery", $("#regDel").val().trim());
     formData.append("whatsapp", $("#regWS").val().trim());
     formData.append("google_maps", $("#regGM").val().trim());
+    formData.append("latitud", $("#regLatitud").val());
+    formData.append("longitud", $("#regLongitud").val());
   
     $.ajax({
         url:  'lugar_turistico/create',

@@ -28,7 +28,7 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'root',
-        'password'     => 'direccionturismo1943*',
+        'password'     => '',
         'database'     => 'turismo',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
