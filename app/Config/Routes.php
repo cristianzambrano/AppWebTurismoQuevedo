@@ -49,7 +49,7 @@ use CodeIgniter\Router\RouteCollection;
     $routes->post('login', 'Usuario::login');
     $routes->get('logout', 'Usuario::logout');
 
-    $routes->get('privacy', 'Usuario::privacy');
+    $routes->get('privacy/v1', 'Usuario::privacy');
     
 
     $routes->get('categoria/getlistadoCB', 'Categoria::getjson_ListadoCategorias/');

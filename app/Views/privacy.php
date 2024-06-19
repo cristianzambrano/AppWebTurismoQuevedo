@@ -1,92 +1,139 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Política de Privacidad</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1, h2 {
-            color: #333;
-        }
-        p {
-            margin: 10px 0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+            text-align: justify;    }
+
+    header {
+      padding: 10px 0;
+      text-align: left;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      margin-left: 20px;
+      height: 90px;
+    }
+
+    header h1 {
+      display: inline;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .container {
+      margin-top: 15px;
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    h2 {
+      color: #4CAF50;
+    }
+  </style>
 </head>
+
 <body>
 
-    <div class="container">
-        <h1>Política de Privacidad</h1>
-        <p>En nuestra aplicación de turismo, nos comprometemos a proteger su privacidad y a asegurar que su información personal se maneje de manera segura y responsable. Esta política de privacidad describe los tipos de información que recopilamos, cómo la usamos y protegemos, y sus derechos en relación con su información personal.</p>
+  <header>
+    <img src="https://i.imgur.com/XrZIN7A.png" alt="Municipio de Quevedo">
+    <h1>Municipio de Quevedo</h1>
+  </header>
 
-        <h2>Recopilación de Información</h2>
-        <h3>Información Recopilada</h3>
-        <p>La única información personal que recopilamos es su <strong>ubicación</strong>. Esta información se recopila exclusivamente para mejorar su experiencia de usuario al proporcionar recomendaciones personalizadas basadas en su ubicación actual.</p>
+  <div class="container">
+    <h2>Políticas de Privacidad</h2>
 
-        <h3>Método de Recopilación</h3>
-        <p>La información de su ubicación se recopila mediante la tecnología de geolocalización de su dispositivo móvil, solo cuando usted otorga los permisos necesarios para acceder a su ubicación.</p>
+    <h3>Introducción</h3>
+    <p>En Quevedo Turístico y Cultural, valoramos y respetamos la privacidad de nuestros usuarios. Esta política de
+      privacidad tiene como objetivo explicar claramente cómo manejamos la información del usuario dentro de
+      nuestra aplicación móvil. Al utilizar nuestra aplicación, usted acepta las prácticas descritas en esta
+      política.</p>
 
-        <h2>Uso de la Información</h2>
-        <h3>Propósitos de Uso</h3>
-        <p>Utilizamos la información de su ubicación para:</p>
-        <ul>
-            <li>Proveer información precisa y relevante sobre atracciones y servicios cercanos.</li>
-            <li>Ofrecer recomendaciones personalizadas basadas en su ubicación actual.</li>
-            <li>Mejorar la funcionalidad y la experiencia general de nuestra aplicación.</li>
-        </ul>
+    <h3>Recopilación de Datos</h3>
+    <ol>
+      <li><strong>Información Personal</strong><br>
+                Nuestra aplicación está diseñada para ser utilizada sin la necesidad de proporcionar datos personales
+                como nombre, dirección de correo electrónico o número de teléfono. No recopilamos ninguna información
+                personal de nuestros usuarios.</li>
 
-        <h3>Compartición de Información</h3>
-        <p>Nos comprometemos a no compartir, vender ni alquilar su información de ubicación a terceros. Su información se utiliza únicamente dentro del contexto de nuestra aplicación para mejorar su experiencia de usuario.</p>
+      <li><strong>Información de Ubicación</strong><br>
+                Nuestra aplicación no accede ni utiliza datos de ubicación del dispositivo, asegurando que su posición
+                geográfica no sea rastreada ni almacenada. Nos comprometemos a mantener la privacidad de su ubicación en
+                todo momento.</li>
 
-        <h2>Protección de la Información</h2>
-        <h3>Medidas de Seguridad</h3>
-        <p>Implementamos medidas de seguridad adecuadas para proteger su información de ubicación contra el acceso no autorizado, alteración, divulgación o destrucción. Estas medidas incluyen:</p>
-        <ul>
-            <li>Cifrado de datos en tránsito y en reposo.</li>
-            <li>Control de acceso restringido a la información de ubicación.</li>
-            <li>Revisión regular de nuestras prácticas de recopilación, almacenamiento y procesamiento de información.</li>
-        </ul>
+      <li><strong>Información de Uso</strong><br>
+                No realizamos seguimiento del comportamiento del usuario dentro de la aplicación ni recopilamos datos
+                sobre cómo se utiliza la aplicación. Nuestra intención es proporcionar una experiencia de usuario segura
+                y privada.</li>
+    </ol>
 
-        <h3>Retención de Datos</h3>
-        <p>Retenemos su información de ubicación solo durante el tiempo que sea necesario para cumplir con los fines descritos en esta política de privacidad. Una vez que ya no sea necesaria, su información se eliminará de manera segura.</p>
+    <h3>Uso de Datos</h3>
+    <ol start="4">
+      <li><strong>Proveedores de Servicios</strong><br>
+                No compartimos información con terceros. No utilizamos proveedores de servicios que necesiten acceso a
+                los datos del usuario, ya que no recopilamos ni almacenamos dichos datos.</li>
 
-        <h2>Derechos del Usuario</h2>
-        <h3>Acceso y Control</h3>
-        <p>Usted tiene el derecho de acceder, corregir o eliminar su información personal en cualquier momento. Puede:</p>
-        <ul>
-            <li>Revisar y actualizar sus permisos de ubicación en la configuración de su dispositivo.</li>
-            <li>Solicitar la eliminación de su información de ubicación contactándonos a través de los medios proporcionados abajo.</li>
-        </ul>
+      <li><strong>Publicidad</strong><br>
+                No mostramos anuncios en nuestra aplicación. Nos enfocamos en ofrecer contenido útil y relevante sin
+                interrupciones publicitarias.</li>
+    </ol>
 
-        <h3>Consentimiento</h3>
-        <p>Al utilizar nuestra aplicación, usted consiente la recopilación y el uso de su información de ubicación según se describe en esta política de privacidad. Puede retirar su consentimiento en cualquier momento desactivando los permisos de ubicación en su dispositivo.</p>
+    <h3>Seguridad de los Datos</h3>
+    <ol start="6">
+      <li><strong>Medidas de Seguridad</strong><br>
+                Aunque no recopilamos datos del usuario, implementamos medidas de seguridad adecuadas para proteger la
+                integridad de nuestra aplicación y prevenir accesos no autorizados.</li>
+    </ol>
 
-        <h2>Actualizaciones de la Política de Privacidad</h2>
-        <p>Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento. Notificaremos cualquier cambio publicando la nueva política de privacidad en nuestra aplicación y actualizando la fecha de "Última actualización" en la parte superior de esta página.</p>
+    <h3>Derechos del Usuario</h3>
+    <ol start="7">
+      <li><strong>Acceso y Control</strong><br>
+                Dado que no recopilamos información personal, no es necesario que los usuarios soliciten acceso o
+                control sobre sus datos. Sin embargo, siempre estamos disponibles para responder cualquier pregunta o
+                inquietud sobre la privacidad.</li>
 
-        <h2>Contacto</h2>
-        <p>Si tiene alguna pregunta o inquietud sobre nuestra política de privacidad, o si desea ejercer sus derechos en relación con su información personal, no dude en contactarnos:</p>
-        <p><strong>Dirección:</strong> Av. Quito y calle Edmundo Ward, Quevedo, Ecuador<br>
-           <strong>Teléfono:</strong> (+593) 53 700 160<br>
-           <strong>Correo Electrónico:</strong> direccionturismogadquevedo@gmail.com
-        </p>
-        <p><em>Última actualización: 07/06/2024</em></p>
-    </div>
+      <li><strong>Actualizaciones de la Política de Privacidad</strong><br>
+                Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento. Notificaremos
+                a los usuarios sobre cualquier cambio a través de nuestra aplicación o por otros medios apropiados.</li>
+    </ol>
+
+    <h3>Cumplimiento con la Política de Familias de Google Play</h3>
+    <ol start="9">
+      <li><strong>Compromiso con la Política de Familias</strong><br>
+                Nuestra aplicación está diseñada para ser accesible y segura para usuarios de todas las edades,
+                incluidos los niños menores de 13 años. Cumplimos con la Política de Familias de Google Play, asegurando
+                que los datos personales de los niños estén protegidos adecuadamente. Recopilamos información personal
+                de niños solo con el consentimiento de los padres o tutores legales, y esta información se utiliza
+                únicamente para proporcionar los servicios solicitados.</li>
+
+      <li><strong>Transparencia y Responsabilidad</strong><br>
+                Nos esforzamos por mantener un alto nivel de transparencia y responsabilidad en nuestras prácticas de
+                privacidad. Si tiene alguna pregunta o inquietud, no dude en contactarnos.</li>
+    </ol>
+
+    <h3>Contacto</h3>
+    <p>Si tiene alguna pregunta sobre esta política de privacidad, puede contactarnos en:</p>
+    <ul>
+      <li><strong>Nombre de la Empresa/Desarrollador:</strong> Municipio de Quevedo</li>
+      <li><strong>Correo Electrónico:</strong> direccionturismogadquevedo@gmail.com</li>
+      <li><strong>Dirección:</strong> Av. Quito y calle Edmundo Ward, Quevedo, Ecuador</li>
+    </ul>
+
+    <p>Esta política de privacidad fue actualizada por última vez el 19 de junio de 2024.</p>
+  </div>
 
 </body>
+
 </html>
