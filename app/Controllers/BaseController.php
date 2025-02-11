@@ -74,6 +74,9 @@ abstract class BaseController extends Controller
        $input = $request->getPost();
        if (empty($input)) {
            $input = json_decode($request->getBody(), true);
+           if (empty($input)) {
+            $input = $request->getGet();
+           }
        }
        return $input;
    }

@@ -56,56 +56,33 @@ header("Cache-Control: no-cache, must-revalidate");
                 Gestión
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fa fa-cog" aria-hidden="true"></i>
-                    <span>Inicializaciones</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-
-                        <a class="collapse-item" onclick="callListaCategoria();" href="#">Categorías</a>
-                        <a class="collapse-item" onclick="callListaSubCategoria();" href="#">SubCategorías</a>
+            <?php 
+                $grouped_items = [];
+                foreach (session()->get('menu_items') as $item) {
+                    $grouped_items[$item['idgrupo']]['icon'] = $item['grupo_icon'];
+                    $grouped_items[$item['idgrupo']]['titulo'] = $item['grupo_descripcion'];
+                    $grouped_items[$item['idgrupo']]['items'][] = $item;
+                }
+                foreach ($grouped_items as $group => $details):
+                    $groupip = "collapse".str_replace(' ', '', $group);
+            ?>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#<?=$groupip?>" aria-expanded="true" aria-controls="<?= $groupip ?>">
+                    <i class="<?= $details['icon'] ?>" aria-hidden="true"></i>
+                        <span><?= $details['titulo'] ?></span>
+                    </a>
+                    <div id="<?= $groupip ?>" class="collapse" aria-labelledby="heading<?= str_replace(' ', '', $group) ?>" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                        <?php foreach ($details['items'] as $item): ?>
+                            <a class="collapse-item" onclick="ajaxLoadContentPanel('<?= $item['ruta'] ?>', '<?= $item['titulo_item'] ?>');" href="#"><?= $item['item_descripcion'] ?></a>
+                        <?php endforeach; ?>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fa fa-plane" aria-hidden="true"></i>
-                    <span>Lugares Turísticos</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        
-                        <a class="collapse-item" onclick="callListaLugaresTuristicosGrid();" href="#">Visualización</a>
-                                            
-                    </div>
+            <?php endforeach; ?>
 
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestión</h6>
-                        <a class="collapse-item" onclick="callListaLugaresTuristicos();" href="#">Listado</a>
-                        <a class="collapse-item" onclick="callAgregarLugaresTuristicos();" href="#">Registrar Nuevo</a>
-                    
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-                    <span>Seguridad</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Entidades del sistema</h6>
-                        <a class="collapse-item" onclick="" href="#">Usuarios</a>
-                    </div>
-                </div>
-            </li>
+    
      
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -168,7 +145,7 @@ header("Cache-Control: no-cache, must-revalidate");
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= session()->get('cedula') ?></span>
-                                <img class="img-profile rounded-circle" src="<?= base_url(); ?>assets/imgs/usuario/marlon.jpg">
+                                <img class="img-profile rounded-circle" src="<?= base_url(); ?>assets/imgs/usuario/<?=session()->get('foto')?>">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -214,7 +191,7 @@ header("Cache-Control: no-cache, must-revalidate");
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <img style="max-height: 50px;" src="<?= base_url(); ?>assets/imgs/logo_alcaldia1.jpg">
-                        <span>Copyright &copy;- 2023</span>
+                        <span>Copyright &copy;- 2024</span>
                     </div>
                     
                 </div>
@@ -268,38 +245,34 @@ header("Cache-Control: no-cache, must-revalidate");
 
     <script src="<?=base_url();?>assets/js/jsFunctions.js"></script>
 
-   
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEaPJ0Pr1XzIi6fHfTiDdYGhdSit7FM9c"></script>
     
 
    
     <script type="text/javascript">
        
         $(document).ready(function() {
-            ajaxLoadContentPanel('lugar_turistico/vista_grid', "Lista Lugares");
+            $("#MainPageContentTitle").html("Panel de Administración");
+            $("#MainPageContent").html("Seleccione una opción del menú");
+
+           // ajaxLoadContentPanel('lugar_turistico/vista_grid', "Lista Lugares", "<?=base_url();?>");
         });
 
         
 
-        function callListaCategoria() {
-            ajaxLoadContentPanel('categoria/vista_listado', "Listado de Categorías");
-        }
-
-        function callListaLugaresTuristicosGrid() {
-            ajaxLoadContentPanel('lugar_turistico/vista_grid', "Lugares Turísticos");
-        }
-
-        function callListaSubCategoria() {
-            ajaxLoadContentPanel('subcategoria/vista_listado', "Listado de SubCategorías");
-        }
+        
 
 
-        function callListaLugaresTuristicos() {
-            ajaxLoadContentPanel('lugar_turistico/vista_listado', "Listado de Lugares Turísticos");
-        }
-
-        function callAgregarLugaresTuristicos() {
-            ajaxLoadContentPanel('lugar_turistico/vista_agregar', "Agregar nuevo Lugar Turístico");
-        }
+        function ajaxLoadContentPanel(Url, Titulo) {
+        $.ajax({
+            url: Url,
+        }).done(function (data) {
+            $("#MainPageContentTitle").html(Titulo);
+            $("#MainPageContent").html(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            mostrarAlerta(jqXHR.status, UrlPath + '<?=base_url();?>login')
+        });
+    }
     </script>
 
 </body>

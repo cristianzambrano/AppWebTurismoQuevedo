@@ -113,7 +113,7 @@ header("Cache-Control: no-cache, must-revalidate");
     </footer>
 
     <!-- Modal general message -->
-  <div class="modal fade" id="modalVerLugar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalVerLugar"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -131,7 +131,8 @@ header("Cache-Control: no-cache, must-revalidate");
     <script src="<?= base_url(); ?>assets/vendor/jquery/jquery.min.js"></script>
     <script src="<?= base_url(); ?>assets/vendor/bootstrap46/js/bootstrap.bundle.min.js"></script>
 
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEaPJ0Pr1XzIi6fHfTiDdYGhdSit7FM9c"></script>
+   
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url(); ?>assets/vendor/jquery.easing/jquery.easing.min.js"></script>
 

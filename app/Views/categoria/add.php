@@ -7,8 +7,8 @@
               <div class="col-sm-11" style="margin: 0.5em 0.5em 0.5em 0.5em;">
                   <label for="regNombres">Descripción</label>
                   <input 
-                      id="regDescripcion" 
-                      name="regDescripcion" 
+                      id="regDescripcionInsert" 
+                      name="regDescripcionInsert" 
                       type="text" 
                       class="form-control" 
                       maxlength="100"

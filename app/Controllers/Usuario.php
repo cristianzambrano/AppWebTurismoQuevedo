@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\usuario_model;
+use App\Models\lugarturistico_model;
 
 
 class Usuario extends BaseController
@@ -12,7 +13,7 @@ class Usuario extends BaseController
     {
             $data = [];
             $rules = [
-                'cedula' => 'required|min_length[10]|max_length[10]|existsUser[cedula]',
+                'cedula' => 'required|min_length[10]|max_length[20]|existsUser[cedula]',
                 'clave' => 'required|min_length[8]|max_length[20]|validateUser[cedula,clave]',
             ];
 
@@ -37,32 +38,80 @@ class Usuario extends BaseController
                 return view('login/login', ["validation" => $this->validator]);
 
             } else {
-                $model = new usuario_model();
 
+                $model = new usuario_model();
                 $user = $model->where('cedula', $this->request->getVar('cedula'))
                                 ->first();
                 $this->setUserSession($user);                
 
-                return redirect()->to("panel");
+                if ($user['rol'] == 'propietario_local') {
+                    $lugarModel = new lugarturistico_model();
+                    $lugares = $lugarModel->where('id_usrpropietario', $user['id'])->findAll();
+                    
+                    return view('login/login_lugar', ['user' => $user,'lugares' => $lugares]);
+
+                } else {
+
+                    session()->set('isLoggedIn', true);
+                    return redirect()->to("panel");
+
+                }
 
             }
      
     }
 
+    public function seleccionarLugar(){
+        
+        if (!session()->has('rol') || !session()->has('user_id')) return redirect()->to('/unauthorized');
+        if (session()->get('rol') !== 'propietario_local')        return redirect()->to('/unauthorized');
+
+
+        $input = $this->getRequestInput($this->request);
+        $lugarId = $input['lugar_id'];
+
+        if (!isset($lugarId))         return $this->sendBadRequest('Parámetro ID requerido');
+        if (!is_numeric($lugarId))    return $this->sendBadRequest('Parámetro ID numérico');
+        if ($lugarId < 1)             return $this->sendBadRequest('Parámetro ID numérico mayor a 0');
+    
+
+        $lugarModel = new lugarturistico_model();
+        $lugar = $lugarModel->find($lugarId);
+        if ($lugar) {
+                session()->set('lugar_id', $lugar['id']);
+                session()->set('isLoggedIn', true);
+                return redirect()->to("panel");
+
+        } else {
+                return $this->sendBadRequest('Parámetro ID No existe Lugar');
+       }
+    }
+
     private function setUserSession($user)
     {
+        if(file_exists('assets/imgs/usuario/' . $user['foto']))
+              $foto = $user['foto'];
+        else  $foto = 'unknown.jpg';
+
         $data = [
             'user_id' => $user['id'],
             'cedula' => $user['cedula'],
             'nombres' => $user['nombres'],
             'apellidos' => $user['apellidos'],
-            'isLoggedIn' => true,
+            'foto' => $foto,
+            'rol' => $user['rol'],
+            'isLoggedIn' => false
         ];
+
+        $model_usuario = new usuario_model();
+        $data['menu_items'] = $model_usuario->get_menu_items_by_role($user['rol']);
 
         session()->set($data);
         return true;
     }
 
+    
+    
     /*public function register()
     {
         $data = [];
@@ -110,5 +159,7 @@ class Usuario extends BaseController
         session()->destroy();
         return redirect()->to(base_url('login'));
     }
+
+    
       
 }

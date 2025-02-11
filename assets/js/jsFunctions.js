@@ -53,14 +53,25 @@ function showPreview(event, idIMG)
         }
     }
 
-    function ajaxLoadContentPanel(Url, Titulo) {
-        $.ajax({
-            url: Url,
-        }).done(function (data) {
-            $("#MainPageContentTitle").html(Titulo);
-            $("#MainPageContent").html(data);
-        });
+    function mostrarAlerta(CodigoError, urlLogin='' ) {
+        switch (CodigoError) {
+            case 400:
+                alert("Error 400: Solicitud incorrecta.");
+                break;
+            case 401:
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = urlLogin;
+                break;
+            case 500:
+                alert("Error 500: Error interno del servidor. Por favor, intenta nuevamente más tarde.");
+                break;
+            default:
+                alert("Error " + CodigoError);
+                break;
+        }
     }
+
+    
 
 
     

@@ -388,14 +388,20 @@
 
       }).fail(function (data) {
 
-        if(data.responseJSON.error)
-            showErrorModalMsg('Error al registrar Lugar Turístico', data.responseJSON.error) ;
-        else{
-            var validaciones = data.responseJSON.validaciones;
-            var msgerror="<b>Validaciones</b><br/>";
-            for (var i = 0; i < validaciones.length; i++) 
-                msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
-            showErrorModalMsg('Error al registrar Lugar Turístico', msgerror) ;   
+        if(data.status==401){
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = '<?=base_url();?>login';
+        }else{
+
+            if(data.responseJSON.error)
+                showErrorModalMsg('Error al registrar Lugar Turístico', data.responseJSON.error) ;
+            else{
+                var validaciones = data.responseJSON.validaciones;
+                var msgerror="<b>Validaciones</b><br/>";
+                for (var i = 0; i < validaciones.length; i++) 
+                    msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
+                showErrorModalMsg('Error al registrar Lugar Turístico', msgerror) ;   
+            }
         }
 
     });

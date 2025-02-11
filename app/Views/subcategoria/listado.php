@@ -161,7 +161,9 @@ function openEditSubCategoriaModal(idsc) {
    }).done(function (data) {
        $("#contentDiv").html(data);
        $('#editModal').modal('show');
-   });
+   }).fail(function (jqXHR, textStatus, errorThrown) {
+        mostrarAlerta(jqXHR.status, '<?=base_url();?>login')
+    });
 }
 
 function openAddSubCategoriaModal() {
@@ -172,7 +174,9 @@ function openAddSubCategoriaModal() {
        //alert(data);
        $("#contentDivAdd").html(data);
        $('#addModal').modal('show');
-   });
+   }).fail(function (jqXHR, textStatus, errorThrown) {
+        mostrarAlerta(jqXHR.status, '<?=base_url();?>login')
+    });
 }
 
 
@@ -204,7 +208,7 @@ function clickAddSubCategoria(){
              url: "subcategoria/create" ,
              type: "POST",
              data: {
-                 descripcion: $("#regDescripcion").val(),
+                 descripcion: $("#regDescripcionInsert").val(),
                  categoria_id: $("#regAddCategoria").val(),
              }
          }).done(function (data) {
@@ -215,19 +219,24 @@ function clickAddSubCategoria(){
              
          }).fail(function (data) {
 
-             if(data.responseJSON.error)
-                 $("#msg_add_alert").html(data.responseJSON.error);
-             else{
-                 var validaciones = data.responseJSON.validaciones;
-                 var msgerror="<b>Validaciones</b><br/>";
-                 for (var i = 0; i < validaciones.length; i++) 
-                     msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
-                 $("#msg_add_alert").html(msgerror);
-             }
+            if(data.status==401){
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = '<?=base_url();?>login';
+            }else{
+                if(data.responseJSON.error)
+                    $("#msg_add_alert").html(data.responseJSON.error);
+                else{
+                    var validaciones = data.responseJSON.validaciones;
+                    var msgerror="<b>Validaciones</b><br/>";
+                    for (var i = 0; i < validaciones.length; i++) 
+                        msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
+                    $("#msg_add_alert").html(msgerror);
+                }
 
-             $("#add-alert").fadeTo(5000, 500).slideUp(500, function() {
-                     $("#add-alert").slideUp(500);
-             });
+                $("#add-alert").fadeTo(5000, 500).slideUp(500, function() {
+                        $("#add-alert").slideUp(500);
+                });
+            }
 
          });
 
@@ -239,7 +248,7 @@ function clickAddSubCategoria(){
            url: "subcategoria/update/" +  $("#idsc").val() ,
            type: "POST",
            data: {
-               descripcion: $("#regDescripcion").val(),
+               descripcion: $("#regDescripcionUpdate").val(),
                categoria_id: $("#regCategoria").val(),
            }
        }).done(function (data) {
@@ -250,6 +259,10 @@ function clickAddSubCategoria(){
            
        }).fail(function (data) {
 
+        if(data.status==401){
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = '<?=base_url();?>login';
+        }else{
            if(data.responseJSON.error)
                $("#msgalert").html(data.responseJSON.error);
            else{
@@ -263,6 +276,7 @@ function clickAddSubCategoria(){
            $("#error-alert").fadeTo(5000, 500).slideUp(500, function() {
                    $("#error-alert").slideUp(500);
            });
+        }
 
        });
 
@@ -281,12 +295,18 @@ function clickAddSubCategoria(){
            
        }).fail(function (data) {
 
+        if(data.status==401){
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = '<?=base_url();?>login';
+        }else{
+
            if(data.responseJSON.error)
                $("#msgalert").html(data.responseJSON.error);
 
            $("#delete-alert").fadeTo(5000, 500).slideUp(500, function() {
                    $("#delete-alert").slideUp(500);
            });
+        }
 
        });
 }

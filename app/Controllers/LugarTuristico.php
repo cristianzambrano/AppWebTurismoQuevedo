@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\lugarturistico_model;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Files\File;
+use App\Models\camposactualizacion_model;
 
 class LugarTuristico extends BaseController
 {
@@ -78,9 +79,11 @@ class LugarTuristico extends BaseController
         if (!is_numeric($IDSC))    return $this->sendBadRequest('Parámetro IDSC NO numérico');
 
         $model = new lugarturistico_model();
-        $datos = $model->getListadoGrid($IDC, $IDSC);
+        $datos = $model->getListadoGrid($IDC, $IDSC, 1);
         if($datos)
             return view('lugarturistico/grid'.($publicView==1?'_public':''), $datos);
+        else
+            return '';
        
     }
 
@@ -160,9 +163,9 @@ class LugarTuristico extends BaseController
     }
 
     ///////////// JSON /////////////////////////
-    public function getjson_ListadoLugares() {
+    public function getjson_ListadoLugares($visible) {
         $model = new lugarturistico_model();
-        $datos = $model->getListado();
+        $datos = $model->getListado($visible);
         if ($datos) 
             echo json_encode($datos);
     
@@ -179,13 +182,14 @@ class LugarTuristico extends BaseController
     }
 
 
-    public function getjson_ListadoLugaresGrid($IDC, $IDSC) {
+    public function getjson_ListadoLugaresGrid($IDC, $IDSC, $visible) {
         
         if (!is_numeric($IDC))     return $this->sendBadRequest('Parámetro IDC NO numérico');
         if (!is_numeric($IDSC))    return $this->sendBadRequest('Parámetro IDSC NO numérico');
+        if (!is_numeric($visible))    return $this->sendBadRequest('Parámetro Visible NO numérico');
         
         $model = new lugarturistico_model();
-        $datos = $model->getListadoGrid($IDC, $IDSC);
+        $datos = $model->getListadoGrid($IDC, $IDSC, $visible);
         if ($datos) 
             echo json_encode($datos);
     
@@ -523,6 +527,72 @@ class LugarTuristico extends BaseController
                  return unlink($imagenpath);
        }
        return true;
+    }
+
+
+    public function getCampoValue($campoId)
+    {
+        $lugarId = session()->get('lugar_id');
+
+        if (!$lugarId) 
+            return $this->sendBadRequest("ID de lugar no encontrado en la sesión");
+        
+
+        $camposModel = new camposactualizacion_model();
+        $campo = $camposModel->getCampoNombre($campoId);
+        if (!$campo) 
+            return $this->sendBadRequest("Campo ID inválido");
+        
+
+        $model = new lugarturistico_model();
+        $valor = $model->getCampoValue($lugarId, $campo);
+
+        // Validar que el registro y el campo existen
+        if ($valor === null) 
+            return $this->sendBadRequest("Registro o campo no encontrado");
+        
+        return $this->response->setJSON([$campo => $valor]);
+    }
+
+    public function getInfoLugar($lugarId)
+    {
+
+        $model = new lugarturistico_model();
+        $lugar = $model->findById($lugarId);
+        
+        if ($lugar === null) 
+            return $this->sendBadRequest("ID de lugar no encontrado");
+        
+    
+        return $this->response->setJSON($lugar);
+    }
+
+
+    public function changeVisibleLugarTuristico($id)
+    {
+        if (!isset($id))         return $this->sendBadRequest('Parámetro ID requerido');
+        if (!is_numeric($id))    return $this->sendBadRequest('Parámetro ID numérico');
+        if ($id < 1)             return $this->sendBadRequest('Parámetro ID numérico mayor a 0');
+
+        $model = new lugarturistico_model();
+        $lugar = $model->findById($id); 
+        if(!$lugar) return $this->sendBadRequest("Lugar Turístico a actualizar No existe");
+        
+        $estado_msg = "";
+        if($lugar['visible']=='0') {
+            $input['visible'] = '1';
+            $estado_msg =" Visible";
+        }else{
+           $input['visible'] = '0';
+           $estado_msg ="Oculto";
+        }
+      
+       try {
+            $model->update($id, $input);
+            return $this->sendResponse(['message' => 'Lugar turístico se ha cambiado a estado '.$estado_msg. ' correctamente!'  ]);
+        } catch (Exception $e) {
+            return $this->sendResponse(['error' => $e->getMessage()], ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
       
 }

@@ -7,6 +7,7 @@
                            <table id="tabla" class="table  table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>Estado</th>    
                                             <th>Logo</th>
                                             <th>SubCategoría</th>
                                             <th>Descripción</th>
@@ -18,6 +19,7 @@
                                     </thead>
                                      <tfoot>
                                         <tr>
+                                            <th>Estado</th>
                                             <th>Logo</th>
                                             <th>SubCategoría</th>
                                             <th>Descripción</th>
@@ -122,11 +124,12 @@
     
     var tbSubCatEdit = $('#tabla').DataTable({
  
-    "ajax":  "lugar_turistico/json_getlistado",
+    "ajax":  "lugar_turistico/json_getlistadoall",
     "rowId": "dt_rowid",
     
     "columns": [
         
+        {"data": "visible_etiqueta"}, 
         {"data": "logo"}, 
         {"data": "subcategoria"},
         {"data": "detalle_lugar"},
@@ -138,20 +141,27 @@
     ],
      "columnDefs": [
      {
-         "targets": 6,
+         "targets": 7,
          "data": "id",
          "className": "text-center",
          "render": function (data, type, row, meta) {
-             return '<a href="javascript:callEditarLugarTuristico(' + data + ')">'
+            var btx="";
+            btx =    '<a href="javascript:callEditarLugarTuristico(' + data + ')">'
                      + '<i class="fa fa-pencil-square-o fa-2x" alt="Editar SubCategoría" aria-hidden="true"></i></a>  '
-                     + '<a href="javascript:dialogrem(' + data + ')">'
+                     + '<a href="javascript:callchangeEstadoLugarTuristico(' + data + ')">';
+            if(row.visible==1)
+                btx = btx +  '<i class="fa fa-eye-slash fa-2x" style="color: grey;" alt="Ocultar Lugar" aria-hidden="true"></i></a>  ';
+            else
+                btx = btx +  '<i class="fa fa-eye fa-2x" alt="Mostrar Lugar" aria-hidden="true"></i></a>  ';
+            
+            btx = btx + '<a href="javascript:dialogrem(' + data + ')">'
                      + '<i class="fa fa-times fa-2x" style="color: red;" alt="Eliminar SubCategoría" aria-hidden="true"></i></a>  '
-                     
-             ;
+             
+            return btx;
          }
      },
      {
-        "targets": 3,
+        "targets": 4,
         "data": "whatsapp",
         "className": "text-center",
         "render": function (data, type, row, meta) {
@@ -164,7 +174,7 @@
         }
     },
     {
-        "targets": 4,
+        "targets": 5,
         "data": "google_maps",
         "className": "text-center",
         "render": function (data, type, row, meta) {
@@ -177,7 +187,7 @@
         }
     },
     {
-        "targets": 5,
+        "targets": 6,
         "data": "delivery",
         "className": "text-center",
         "render": function (data, type, row, meta) {
@@ -189,7 +199,7 @@
         }
     },
      {
-        "targets": 0,
+        "targets": 1,
         "data": "logo",
         "className": "text-center",
         "render": function (data, type, row, meta) {
@@ -202,7 +212,7 @@
  
      initComplete: function () {
          this.api()
-             .columns(1)
+             .columns(2)
              .every(function () {
                  let column = this;
   
@@ -246,6 +256,8 @@ function callEditarLugarTuristico(id) {
             $("#MainPageContentTitle").html("Editar nuevo Lugar Turístico");
             $("#MainPageContent").html(data);
     
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            mostrarAlerta(jqXHR.status, '<?=base_url();?>login')
         });
     }
 
@@ -262,12 +274,42 @@ function callEditarLugarTuristico(id) {
         
     }).fail(function (data) {
 
-        if(data.responseJSON.error)
-            $("#msgalert").html(data.responseJSON.error);
+        if(data.status==401){
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = '<?=base_url();?>login';
+        }else{
+                if(data.responseJSON.error)
+                    $("#msgalert").html(data.responseJSON.error);
 
-        $("#delete-alert").fadeTo(5000, 500).slideUp(500, function() {
-                $("#delete-alert").slideUp(500);
-        });
+                $("#delete-alert").fadeTo(5000, 500).slideUp(500, function() {
+                        $("#delete-alert").slideUp(500);
+                });
+        }
+
+    });
+}
+
+
+    function callchangeEstadoLugarTuristico(id) {
+    $.ajax({
+        dataType: "json",
+        url: "lugar_turistico/changevisiblelugarturistico/" +  id ,
+        type: "POST"
+    }).done(function (data) {
+
+        var tbSubCatEdit = $('#tabla').DataTable();
+        tbSubCatEdit.ajax.reload( null, false ); 
+        alert(data.message);
+       
+    }).fail(function (data) {
+
+        if(data.status==401){
+                alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+                window.location.href = '<?=base_url();?>login';
+        }else{
+            if(data.responseJSON.error)
+                $("#msgalert").html(data.responseJSON.error);
+        }
 
     });
 }

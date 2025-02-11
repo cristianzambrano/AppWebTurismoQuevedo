@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\categoria_model;
-
+use CodeIgniter\HTTP\ResponseInterface;
 
 class Categoria extends BaseController
 {

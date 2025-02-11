@@ -115,9 +115,10 @@
         $.ajax({
             url: 'categoria/vista_agregar',
         }).done(function (data) {
-            //alert(data);
             $("#contentDivAdd").html(data);
             $('#addModal').modal('show');
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            mostrarAlerta(jqXHR.status, '<?=base_url();?>login')
         });
     }
 
@@ -139,7 +140,9 @@
    }).done(function (data) {
        $("#contentDiv").html(data);
        $('#editModal').modal('show');
-   });
+   }).fail(function (jqXHR, textStatus, errorThrown) {
+      mostrarAlerta(jqXHR.status, '<?=base_url();?>login')
+    });
 }
 
 
@@ -161,7 +164,7 @@
         url: "categoria/create" ,
         type: "POST",
         data: {
-            descripcion: $("#regDescripcion").val()
+            descripcion: $("#regDescripcionInsert").val()
         }
     }).done(function (data) {
 
@@ -171,19 +174,24 @@
         
     }).fail(function (data) {
 
-        if(data.responseJSON.error)
-            $("#msg_add_alert").html(data.responseJSON.error);
-        else{
-            var validaciones = data.responseJSON.validaciones;
-            var msgerror="<b>Validaciones</b><br/>";
-            for (var i = 0; i < validaciones.length; i++) 
-                msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
-            $("#msg_add_alert").html(msgerror);
-        }
+        if(data.status==401){
+            alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+            window.location.href = '<?=base_url();?>login';
+        }else{
+            if(data.responseJSON.error)
+                $("#msg_add_alert").html(data.responseJSON.error);
+            else{
+                var validaciones = data.responseJSON.validaciones;
+                var msgerror="<b>Validaciones</b><br/>";
+                for (var i = 0; i < validaciones.length; i++) 
+                    msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
+                $("#msg_add_alert").html(msgerror);
+            }
 
-        $("#add-alert").fadeTo(5000, 500).slideUp(500, function() {
-                $("#add-alert").slideUp(500);
-        });
+            $("#add-alert").fadeTo(5000, 500).slideUp(500, function() {
+                    $("#add-alert").slideUp(500);
+            });
+        }
 
     });
 
@@ -195,7 +203,7 @@ function updateCategoria() {
       url: "categoria/update/" +  $("#idc").val() ,
       type: "POST",
       data: {
-          descripcion: $("#regDescripcion").val()
+          descripcion: $("#regDescripcionUpdate").val()
       }
   }).done(function (data) {
 
@@ -205,19 +213,24 @@ function updateCategoria() {
       
   }).fail(function (data) {
 
-      if(data.responseJSON.error)
-          $("#msgalert").html(data.responseJSON.error);
-      else{
-          var validaciones = data.responseJSON.validaciones;
-          var msgerror="<b>Validaciones</b><br/>";
-          for (var i = 0; i < validaciones.length; i++) 
-              msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
-          $("#msgalert").html(msgerror);
-      }
+    if(data.status==401){
+            alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+            window.location.href = '<?=base_url();?>login';
+    }else{
+        if(data.responseJSON.error)
+            $("#msgalert").html(data.responseJSON.error);
+        else{
+            var validaciones = data.responseJSON.validaciones;
+            var msgerror="<b>Validaciones</b><br/>";
+            for (var i = 0; i < validaciones.length; i++) 
+                msgerror = msgerror + validaciones[i].mensaje  + "<br/>";
+            $("#msgalert").html(msgerror);
+        }
 
-      $("#error-alert").fadeTo(5000, 500).slideUp(500, function() {
-              $("#error-alert").slideUp(500);
-      });
+        $("#error-alert").fadeTo(5000, 500).slideUp(500, function() {
+                $("#error-alert").slideUp(500);
+        });
+    }
 
   });
 
@@ -236,12 +249,17 @@ function delCategoria() {
       
   }).fail(function (data) {
 
+    if(data.status==401){
+        alert("Error 401: No autorizado. Redirigiendo a la página de inicio de sesión...");
+        window.location.href = '<?=base_url();?>login';
+    }else{
       if(data.responseJSON.error)
           $("#msgalert").html(data.responseJSON.error);
 
       $("#delete-alert").fadeTo(5000, 500).slideUp(500, function() {
               $("#delete-alert").slideUp(500);
       });
+    }
 
   });
 }
